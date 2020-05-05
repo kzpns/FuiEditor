@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FuiEditor", "FuiEditor.csproj", "{7A2905E6-65E0-4774-87F9-4A2CCC6766F3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7A2905E6-65E0-4774-87F9-4A2CCC6766F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A2905E6-65E0-4774-87F9-4A2CCC6766F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A2905E6-65E0-4774-87F9-4A2CCC6766F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A2905E6-65E0-4774-87F9-4A2CCC6766F3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EC2F2232-6EA5-4617-AF81-9AD94AEBE2F2}
+	EndGlobalSection
+EndGlobal
