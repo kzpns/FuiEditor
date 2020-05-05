@@ -4,7 +4,6 @@ using System.Linq;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
-using System.Diagnostics;
 
 namespace FuiEditor
 {
@@ -49,6 +48,14 @@ namespace FuiEditor
                 MessageBox.Show("Oops, maybe not supported.", "Warning");
             }
             return imageList.ToArray();
+        }
+
+        public static byte[] ProcessHeader(byte[] filedata)
+        {
+            byte[] processed = (byte[])filedata.Clone();
+            byte[] sizeBytes = GetBytes(filedata.Length - 152);
+            Array.Copy(sizeBytes, 0, processed, 8, sizeBytes.Length);
+            return processed;
         }
 
         public static int ToInt32(byte[] filedata, int startIndex)

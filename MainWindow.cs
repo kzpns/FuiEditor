@@ -227,7 +227,7 @@ namespace FuiEditor
             }
 
             fuiBytes.AddRange(imageSection);
-            File.WriteAllBytes(filepath, fuiBytes.ToArray());
+            File.WriteAllBytes(filepath, FuiUtils.ProcessHeader(fuiBytes.ToArray()));
 
             OnFuiSaved(filepath);
         }
