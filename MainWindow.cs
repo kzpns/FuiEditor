@@ -20,7 +20,7 @@ namespace FuiEditor
         private bool shouldSaveFui = false;
         private byte[] fuiMainBytes;
         private List<FuiImageInfo> fuiImageInfo = new List<FuiImageInfo>();
-        private List<Image> originalImages = new List<Image>();
+        private List<byte[]> originalImagesData = new List<byte[]>();
 
         public MainWindow()
         {
@@ -30,7 +30,7 @@ namespace FuiEditor
         private void OnFileOpenClick(object sender, EventArgs e)
         {
             OpenFileDialog fileDialog = new OpenFileDialog();
-            fileDialog.Filter = "FUI files (*.fui)|*.fui|All Files (*.*)|*.*";
+            fileDialog.Filter = "Fui files (*.fui)|*.fui|All Files (*.*)|*.*";
             fileDialog.Title = Resources.DialogOpenFui;
             fileDialog.RestoreDirectory = true;
 
@@ -86,10 +86,12 @@ namespace FuiEditor
             {
                 int selected = imageListView.SelectedIndices[0];
                 string filepath = fileDialog.FileName;
+                originalImagesData[selected] = File.ReadAllBytes(filepath);
+
                 Image imageLoaded = Image.FromFile(filepath);
-                originalImages[selected] = imageLoaded;
                 imageList.Images[selected] = CreateThumbnail(imageLoaded, imageList.ImageSize);
                 imageListView.Items[selected].Text = $"{imageLoaded.Width}x{imageLoaded.Height}";
+                imageLoaded.Dispose();
 
                 shouldSaveFui = true;
             }
@@ -114,15 +116,23 @@ namespace FuiEditor
             {
                 int selected = imageListView.SelectedIndices[0];
                 string filepath = fileDialog.FileName;
-                Image imageSave = originalImages[selected];
+                byte[] imageData = originalImagesData[selected];
 
-                if(File.Exists(filepath))
+                using (MemoryStream stream = new MemoryStream(imageData))
                 {
-                    File.Delete(filepath);
+                    Image imageSave = Image.FromStream(stream);
+                    ImageFormat format = Path.GetExtension(filepath).Equals(".png", StringComparison.OrdinalIgnoreCase)
+                        ? ImageFormat.Png : ImageFormat.Jpeg;
+                    if(format == imageSave.RawFormat)
+                    {
+                        File.WriteAllBytes(filepath, imageData);
+                    }
+                    else
+                    {
+                        imageSave.Save(filepath, format);
+                    }
+                    imageSave.Dispose();
                 }
-
-                ImageFormat format = Path.GetExtension(filepath) == ".png" ? ImageFormat.Png : ImageFormat.Jpeg;
-                imageSave.Save(filepath, format);
             }
         }
 
@@ -143,8 +153,12 @@ namespace FuiEditor
 
         private void OnFuiOpen()
         {
+            foreach(Image image in imageList.Images)
+            {
+                image.Dispose();
+            }
             fuiImageInfo.Clear();
-            originalImages.Clear();
+            originalImagesData.Clear();
             imageList.Images.Clear();
             imageListView.Items.Clear();
             currentOpenFui = null;
@@ -184,13 +198,18 @@ namespace FuiEditor
             }
 
             FuiImageInfo[] imageInfo = FuiUtils.GetImageInfo(filedata, pngIndex);
-            Image[] images = FuiUtils.GetImages(filedata, pngIndex, imageInfo);
-            originalImages.AddRange(images);
-            for (int i = 0; i < images.Length; i++)
+            List<byte[]> imagesData = FuiUtils.GetImagesData(filedata, pngIndex, imageInfo);
+            originalImagesData.AddRange(imagesData);
+            for (int i = 0; i < imagesData.Count; i++)
             {
-                Image image = images[i];
-                imageList.Images.Add(CreateThumbnail(image, imageList.ImageSize));
-                imageListView.Items.Add($"{image.Width}x{image.Height}", i);
+                byte[] imageData = imagesData[i];
+                using (MemoryStream stream = new MemoryStream(imageData, false))
+                {
+                    Image image = Image.FromStream(stream);
+                    imageList.Images.Add(CreateThumbnail(image, imageList.ImageSize));
+                    imageListView.Items.Add($"{image.Width}x{image.Height}", i);
+                    image.Dispose();
+                }
             }
 
             fuiMainBytes = filedata.Take(pngIndex - imageInfo.Length * FuiImageInfo.NativeSize).ToArray();
@@ -210,19 +229,21 @@ namespace FuiEditor
             for(int i=0; i<fuiImageInfo.Count; i++)
             {
                 FuiImageInfo imageInfo = fuiImageInfo[i];
-                imageInfo.ImageOffset = currentOffset;
-                using (MemoryStream stream = new MemoryStream())
+                using (MemoryStream imageStream = new MemoryStream(originalImagesData[i], false))
                 {
-                    Image imageSave = originalImages[i];
-                    imageSave.Save(stream, imageSave.RawFormat);
+                    Image imageSave = Image.FromStream(imageStream);
 
-                    byte[] imageBytes = stream.ToArray();
+                    byte[] imageBytes = originalImagesData[i];
+                    imageInfo.Width = imageSave.Width;
+                    imageInfo.Height = imageSave.Height;
+                    imageInfo.ImageOffset = currentOffset;
                     imageInfo.ImageSize = imageBytes.Length;
 
                     fuiBytes.AddRange(imageInfo.ToByteArray());
                     imageSection.AddRange(imageBytes);
 
                     currentOffset += imageBytes.Length;
+                    imageSave.Dispose();
                 }
             }
 
@@ -255,7 +276,6 @@ namespace FuiEditor
 
             g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
 
-            //g.DrawImage(original, (w - fw) / 2, (h - fh) / 2, fw, fh);
             g.DrawImage(original,
                 new RectangleF((w - fw) / 2, (h - fh) / 2, fw, fh),
                 new RectangleF(0, 0, original.Width, original.Height), GraphicsUnit.Pixel);

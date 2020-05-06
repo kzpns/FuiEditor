@@ -28,18 +28,20 @@ namespace FuiEditor
             return imageInfoStack.ToArray();
         }
 
-        public static Image[] GetImages(byte[] filedata, int imageIndex, FuiImageInfo[] imageInfoNeeded)
+        public static List<byte[]> GetImagesData(byte[] filedata, int imageIndex, FuiImageInfo[] imageInfoNeeded)
         {
-            List<Image> imageList = new List<Image>(imageInfoNeeded.Length);
+            List<byte[]> imageList = new List<byte[]>(imageInfoNeeded.Length);
             int bytesRead = 0;
             foreach(FuiImageInfo imageInfo in imageInfoNeeded)
             {
-                //byte[] imageBytes = filedata.Skip(imageIndex + imageInfo.ImageOffset).Take(imageInfo.ImageSize).ToArray();
-                //using(MemoryStream stream = new MemoryStream(imageBytes))
-                using (MemoryStream stream = new MemoryStream(filedata, imageIndex + imageInfo.ImageOffset, imageInfo.ImageSize))
+                /*using (MemoryStream stream = new MemoryStream(filedata, imageIndex + imageInfo.ImageOffset, imageInfo.ImageSize))
                 {
-                    imageList.Add(Image.FromStream(stream));
-                }
+                    //for error when save image
+                    Image image = Image.FromStream(stream);
+                    imageList.Add(new Bitmap(image));
+                }*/
+
+                imageList.Add(filedata.Skip(imageIndex + imageInfo.ImageOffset).Take(imageInfo.ImageSize).ToArray());
 
                 bytesRead += imageInfo.ImageSize;
             }
@@ -47,7 +49,7 @@ namespace FuiEditor
             {
                 MessageBox.Show("Oops, maybe not supported.", "Warning");
             }
-            return imageList.ToArray();
+            return imageList;
         }
 
         public static byte[] ProcessHeader(byte[] filedata)

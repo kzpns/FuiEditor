@@ -12,8 +12,8 @@ namespace FuiEditor
 
         private int unk_0x0;
         private int unk_0x4;
-        private int unk_0x8;
-        private int unk_0xC;
+        private int imageWidth;
+        private int imageHeight;
         private int imageOffset;
         private int imageSize;
         private int unk_0x18;
@@ -28,8 +28,8 @@ namespace FuiEditor
         {
             unk_0x0 = FuiUtils.ToInt32(filedata, startIndex + 0);
             unk_0x4 = FuiUtils.ToInt32(filedata, startIndex + 4);
-            unk_0x8 = FuiUtils.ToInt32(filedata, startIndex + 8);
-            unk_0xC = FuiUtils.ToInt32(filedata, startIndex + 12);
+            imageWidth = FuiUtils.ToInt32(filedata, startIndex + 8);
+            imageHeight = FuiUtils.ToInt32(filedata, startIndex + 12);
             imageOffset = FuiUtils.ToInt32(filedata, startIndex + 16);
             imageSize = FuiUtils.ToInt32(filedata, startIndex + 20);
             unk_0x18 = FuiUtils.ToInt32(filedata, startIndex + 24);
@@ -42,8 +42,8 @@ namespace FuiEditor
 
             byteList.AddRange(FuiUtils.GetBytes(unk_0x0));
             byteList.AddRange(FuiUtils.GetBytes(unk_0x4));
-            byteList.AddRange(FuiUtils.GetBytes(unk_0x8));
-            byteList.AddRange(FuiUtils.GetBytes(unk_0xC));
+            byteList.AddRange(FuiUtils.GetBytes(imageWidth));
+            byteList.AddRange(FuiUtils.GetBytes(imageHeight));
             byteList.AddRange(FuiUtils.GetBytes(imageOffset));
             byteList.AddRange(FuiUtils.GetBytes(ImageSize));
             byteList.AddRange(FuiUtils.GetBytes(unk_0x18));
@@ -62,6 +62,18 @@ namespace FuiEditor
         {
             get => imageSize;
             set => imageSize = value;
+        }
+
+        public int Width
+        {
+            get => imageWidth;
+            set => imageWidth = value;
+        }
+
+        public int Height
+        {
+            get => imageHeight;
+            set => imageHeight = value;
         }
     }
 }
