@@ -6,6 +6,9 @@
 Open `FuiEditor.sln`and run build! <br>
 ... or run `BuildRelease.bat` (Both VS2019 Community required.) <br>
 
+## Issues
+If you have a problem, please report at [Issue page].(https://github.com/kzpns/FuiEditor/issues)
+
 ## License
 FuiEditor is licensed under [MIT](https://github.com/kzpns/FuiEditor/blob/master/LICENSE). <br>
-Check out it if you reuse source code.
+Check out if you reuse source code.
