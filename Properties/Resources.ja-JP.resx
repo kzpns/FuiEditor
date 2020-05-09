@@ -117,23 +117,32 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="DialogAllFiles" xml:space="preserve">
+    <value>全てのファイル</value>
+  </data>
+  <data name="DialogCorrectColor" xml:space="preserve">
+    <value>色を補正する</value>
+  </data>
   <data name="DialogError" xml:space="preserve">
     <value>エラー</value>
   </data>
   <data name="DialogFailedToOpen" xml:space="preserve">
-    <value>.fui ファイルを開くことができませんでした</value>
+    <value>Fui ファイルを開くことができませんでした</value>
   </data>
   <data name="DialogInfo" xml:space="preserve">
     <value>情報</value>
   </data>
   <data name="DialogNotifySave" xml:space="preserve">
-    <value>まだ .fui ファイルは保存されていません。 アプリケーションを終了しますか？</value>
+    <value>まだ Fui ファイルは保存されていません。 アプリケーションを終了しますか？</value>
   </data>
   <data name="DialogOpenFui" xml:space="preserve">
     <value>Fui を開く</value>
   </data>
   <data name="DialogReplaceImage" xml:space="preserve">
     <value>画像を上書き</value>
+  </data>
+  <data name="DialogSaveAllImages" xml:space="preserve">
+    <value>全ての画像を保存</value>
   </data>
   <data name="DialogSavedFui" xml:space="preserve">
     <value>Fui を保存しました ({0})</value>

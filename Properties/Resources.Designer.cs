@@ -61,6 +61,24 @@ namespace FuiEditor.Properties {
         }
         
         /// <summary>
+        ///   All files に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string DialogAllFiles {
+            get {
+                return ResourceManager.GetString("DialogAllFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Correcting color に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string DialogCorrectColor {
+            get {
+                return ResourceManager.GetString("DialogCorrectColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Error に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string DialogError {
@@ -70,7 +88,7 @@ namespace FuiEditor.Properties {
         }
         
         /// <summary>
-        ///   Failed to open .fui. に類似しているローカライズされた文字列を検索します。
+        ///   Failed to open Fui. に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string DialogFailedToOpen {
             get {
@@ -88,7 +106,7 @@ namespace FuiEditor.Properties {
         }
         
         /// <summary>
-        ///   You&apos;ve not saved the .fui yet. Do you exit this application? に類似しているローカライズされた文字列を検索します。
+        ///   You&apos;ve not saved the Fui yet. Do you exit this application? に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string DialogNotifySave {
             get {
@@ -111,6 +129,15 @@ namespace FuiEditor.Properties {
         internal static string DialogReplaceImage {
             get {
                 return ResourceManager.GetString("DialogReplaceImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Save all images に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string DialogSaveAllImages {
+            get {
+                return ResourceManager.GetString("DialogSaveAllImages", resourceCulture);
             }
         }
         

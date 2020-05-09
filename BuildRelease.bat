@@ -6,6 +6,9 @@ rem thx!
 rem まず開発者用コマンドプロンプトを起動してから
 call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\Tools\VsDevCmd.bat"
 
+rem NuGetを使いパッケージを復元
+nuget restore
+
 rem MSBuildでビルドする(C#)
 cd %~dp0
 

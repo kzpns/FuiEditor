@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using FuiEditor.Forms;
 
 namespace FuiEditor
 {
