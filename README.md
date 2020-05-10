@@ -1,6 +1,6 @@
 # FuiEditor
 ・At the moment, only supports replacing images. <br>
-[Latest release - 最新版のダウンロード](https://github.com/kzpns/FuiEditor/releases/latest)
+[Latest release - 最新版のダウンロード](https://github.com/kzpns/FuiEditor/releases)
 
 ## Building
 Open `FuiEditor.sln`and run build! <br>
