@@ -169,6 +169,15 @@ namespace FuiEditor.Properties {
         }
         
         /// <summary>
+        ///   Save selected images に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string DialogSaveSelectedImages {
+            get {
+                return ResourceManager.GetString("DialogSaveSelectedImages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Select image first, please. に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string DialogSelectImage {

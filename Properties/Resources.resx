@@ -153,6 +153,9 @@
   <data name="DialogSaveImage" xml:space="preserve">
     <value>Save image</value>
   </data>
+  <data name="DialogSaveSelectedImages" xml:space="preserve">
+    <value>Save selected images</value>
+  </data>
   <data name="DialogSelectImage" xml:space="preserve">
     <value>Select image first, please.</value>
   </data>

@@ -27,17 +27,22 @@
             this.fileExitStripMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.statusLabel = new System.Windows.Forms.Label();
-            this.imageListView = new System.Windows.Forms.ListView();
             this.imageMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.imageReplaceStripMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.imageSaveStripMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.imageReplaceStripMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.imageEditAttributeStripMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.imageList = new System.Windows.Forms.ImageList(this.components);
+            this.imageBulkMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.imageBulkSave = new System.Windows.Forms.ToolStripMenuItem();
+            this.imageListView = new FuiEditor.Forms.ChangableMenuListView();
             this.menuStrip.SuspendLayout();
             this.imageMenuStrip.SuspendLayout();
+            this.imageBulkMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // fileStripMenu
             // 
+            resources.ApplyResources(this.fileStripMenu, "fileStripMenu");
             this.fileStripMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileOpenStripMenu,
             this.fileStripMenuSeparatorOpenSave,
@@ -47,18 +52,17 @@
             this.fileStripMenuSeparatorSaveExit,
             this.fileExitStripMenu});
             this.fileStripMenu.Name = "fileStripMenu";
-            resources.ApplyResources(this.fileStripMenu, "fileStripMenu");
             // 
             // fileOpenStripMenu
             // 
-            this.fileOpenStripMenu.Name = "fileOpenStripMenu";
             resources.ApplyResources(this.fileOpenStripMenu, "fileOpenStripMenu");
+            this.fileOpenStripMenu.Name = "fileOpenStripMenu";
             this.fileOpenStripMenu.Click += new System.EventHandler(this.OnClickFileOpen);
             // 
             // fileStripMenuSeparatorOpenSave
             // 
-            this.fileStripMenuSeparatorOpenSave.Name = "fileStripMenuSeparatorOpenSave";
             resources.ApplyResources(this.fileStripMenuSeparatorOpenSave, "fileStripMenuSeparatorOpenSave");
+            this.fileStripMenuSeparatorOpenSave.Name = "fileStripMenuSeparatorOpenSave";
             // 
             // fileSaveStripMenu
             // 
@@ -80,20 +84,20 @@
             // 
             // fileStripMenuSeparatorSaveExit
             // 
-            this.fileStripMenuSeparatorSaveExit.Name = "fileStripMenuSeparatorSaveExit";
             resources.ApplyResources(this.fileStripMenuSeparatorSaveExit, "fileStripMenuSeparatorSaveExit");
+            this.fileStripMenuSeparatorSaveExit.Name = "fileStripMenuSeparatorSaveExit";
             // 
             // fileExitStripMenu
             // 
-            this.fileExitStripMenu.Name = "fileExitStripMenu";
             resources.ApplyResources(this.fileExitStripMenu, "fileExitStripMenu");
+            this.fileExitStripMenu.Name = "fileExitStripMenu";
             this.fileExitStripMenu.Click += new System.EventHandler(this.OnClickFileExit);
             // 
             // menuStrip
             // 
+            resources.ApplyResources(this.menuStrip, "menuStrip");
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileStripMenu});
-            resources.ApplyResources(this.menuStrip, "menuStrip");
             this.menuStrip.Name = "menuStrip";
             // 
             // statusLabel
@@ -101,44 +105,64 @@
             resources.ApplyResources(this.statusLabel, "statusLabel");
             this.statusLabel.Name = "statusLabel";
             // 
-            // imageListView
-            // 
-            resources.ApplyResources(this.imageListView, "imageListView");
-            this.imageListView.ContextMenuStrip = this.imageMenuStrip;
-            this.imageListView.HideSelection = false;
-            this.imageListView.LargeImageList = this.imageList;
-            this.imageListView.MultiSelect = false;
-            this.imageListView.Name = "imageListView";
-            this.imageListView.SmallImageList = this.imageList;
-            this.imageListView.StateImageList = this.imageList;
-            this.imageListView.TileSize = new System.Drawing.Size(100, 100);
-            this.imageListView.UseCompatibleStateImageBehavior = false;
-            // 
             // imageMenuStrip
             // 
-            this.imageMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.imageReplaceStripMenu,
-            this.imageSaveStripMenu});
-            this.imageMenuStrip.Name = "contextMenuStrip1";
             resources.ApplyResources(this.imageMenuStrip, "imageMenuStrip");
-            // 
-            // imageReplaceStripMenu
-            // 
-            this.imageReplaceStripMenu.Name = "imageReplaceStripMenu";
-            resources.ApplyResources(this.imageReplaceStripMenu, "imageReplaceStripMenu");
-            this.imageReplaceStripMenu.Click += new System.EventHandler(this.OnClickImageReplace);
+            this.imageMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.imageSaveStripMenu,
+            this.imageReplaceStripMenu,
+            this.imageEditAttributeStripMenu});
+            this.imageMenuStrip.Name = "contextMenuStrip1";
             // 
             // imageSaveStripMenu
             // 
-            this.imageSaveStripMenu.Name = "imageSaveStripMenu";
             resources.ApplyResources(this.imageSaveStripMenu, "imageSaveStripMenu");
+            this.imageSaveStripMenu.Name = "imageSaveStripMenu";
             this.imageSaveStripMenu.Click += new System.EventHandler(this.OnClickImageSave);
+            // 
+            // imageReplaceStripMenu
+            // 
+            resources.ApplyResources(this.imageReplaceStripMenu, "imageReplaceStripMenu");
+            this.imageReplaceStripMenu.Name = "imageReplaceStripMenu";
+            this.imageReplaceStripMenu.Click += new System.EventHandler(this.OnClickImageReplace);
+            // 
+            // imageEditAttributeStripMenu
+            // 
+            resources.ApplyResources(this.imageEditAttributeStripMenu, "imageEditAttributeStripMenu");
+            this.imageEditAttributeStripMenu.Name = "imageEditAttributeStripMenu";
+            this.imageEditAttributeStripMenu.Click += new System.EventHandler(this.OnClickImageEditAttribute);
             // 
             // imageList
             // 
             this.imageList.ColorDepth = System.Windows.Forms.ColorDepth.Depth24Bit;
             resources.ApplyResources(this.imageList, "imageList");
             this.imageList.TransparentColor = System.Drawing.Color.Transparent;
+            // 
+            // imageBulkMenuStrip
+            // 
+            resources.ApplyResources(this.imageBulkMenuStrip, "imageBulkMenuStrip");
+            this.imageBulkMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.imageBulkSave});
+            this.imageBulkMenuStrip.Name = "imageBulkMenuStrip";
+            // 
+            // imageBulkSave
+            // 
+            resources.ApplyResources(this.imageBulkSave, "imageBulkSave");
+            this.imageBulkSave.Name = "imageBulkSave";
+            this.imageBulkSave.Click += new System.EventHandler(this.OnClickImagesSave);
+            // 
+            // imageListView
+            // 
+            resources.ApplyResources(this.imageListView, "imageListView");
+            this.imageListView.HideSelection = false;
+            this.imageListView.LargeImageList = this.imageList;
+            this.imageListView.MultiSelectedContextMenuStrip = this.imageBulkMenuStrip;
+            this.imageListView.Name = "imageListView";
+            this.imageListView.SingleSelectedContextMenuStrip = this.imageMenuStrip;
+            this.imageListView.SmallImageList = this.imageList;
+            this.imageListView.StateImageList = this.imageList;
+            this.imageListView.TileSize = new System.Drawing.Size(100, 100);
+            this.imageListView.UseCompatibleStateImageBehavior = false;
             // 
             // MainWindow
             // 
@@ -153,6 +177,7 @@
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             this.imageMenuStrip.ResumeLayout(false);
+            this.imageBulkMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -165,7 +190,7 @@
         private System.Windows.Forms.ToolStripMenuItem fileExitStripMenu;
         private System.Windows.Forms.MenuStrip menuStrip;
         private System.Windows.Forms.Label statusLabel;
-        private System.Windows.Forms.ListView imageListView;
+        private ChangableMenuListView imageListView;
         private System.Windows.Forms.ImageList imageList;
         private System.Windows.Forms.ContextMenuStrip imageMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem imageReplaceStripMenu;
@@ -173,6 +198,9 @@
         private System.Windows.Forms.ToolStripSeparator fileStripMenuSeparatorOpenSave;
         private System.Windows.Forms.ToolStripMenuItem fileSaveAllImagesStripMenu;
         private System.Windows.Forms.ToolStripSeparator fileStripMenuSeparatorSaveExit;
+        private System.Windows.Forms.ContextMenuStrip imageBulkMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem imageBulkSave;
+        private System.Windows.Forms.ToolStripMenuItem imageEditAttributeStripMenu;
     }
 }
 

@@ -71,10 +71,21 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\AttributeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AttributeForm.Designer.cs">
+      <DependentUpon>AttributeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ChangableMenuListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Utils\ArrayUtils.cs" />
     <Compile Include="FuiImageInfo.cs" />
     <Compile Include="Utils\FuiUtils.cs" />

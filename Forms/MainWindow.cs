@@ -102,29 +102,29 @@ namespace FuiEditor.Forms
                 int selected = imageListView.SelectedIndices[0];
                 string filepath = fileDialog.FileName;
                 byte[] filedata = File.ReadAllBytes(filepath);
-
-                if (!correctColorCb.IsChecked)
-                {
-                    originalImagesData[selected] = filedata;
-                }
+                ImageFormat originalFormat = originalImageFormats[selected];
 
                 using (MemoryStream stream = new MemoryStream(filedata, false))
                 {
                     Image imageLoaded = Image.FromStream(stream);
 
-                    if(correctColorCb.IsChecked)
+                    if(!correctColorCb.IsChecked && originalFormat == imageLoaded.RawFormat)
                     {
-                        ImageUtils.ReverseColorRB((Bitmap)imageLoaded);
-                        MemoryStream saveStream = new MemoryStream();
-
-                        imageLoaded.Save(saveStream, imageLoaded.RawFormat);
-                        originalImagesData[selected] = saveStream.ToArray();
-
-                        saveStream.Dispose();
+                        originalImagesData[selected] = filedata;
                     }
                     else
                     {
-                        originalImagesData[selected] = filedata;
+                        if (correctColorCb.IsChecked)
+                        {
+                            ImageUtils.ReverseColorRB((Bitmap)imageLoaded);
+                        }
+
+                        MemoryStream saveStream = new MemoryStream();
+
+                        imageLoaded.Save(saveStream, originalFormat);
+                        originalImagesData[selected] = saveStream.ToArray();
+
+                        saveStream.Dispose();
                     }
 
                     imageList.Images[selected].Dispose();
@@ -227,20 +227,99 @@ namespace FuiEditor.Forms
 
                 for(int i=0; i<originalImageFormats.Count; i++)
                 {
-                    string filepath;
                     ImageFormat imageFormat = originalImageFormats[i];
+                    FuiImageInfo imageInfo = fuiImageInfo[i];
+                    int attribute = imageInfo.Attribute;
+                    string filepath;
 
-                    if(extensions.ContainsKey(imageFormat))
+                    if (extensions.ContainsKey(imageFormat))
                     {
                         string extension = extensions[imageFormat];
+
                         filepath = string.Format(filepathBase, i, extension);
                     }
                     else
                     {
-                        filepath = string.Format(filepathBase, i, "img");
+                        filepath = string.Format(filepathBase, i, ".unknown");
                     }
 
                     File.WriteAllBytes(filepath, originalImagesData[i]);
+                }
+            }
+        }
+
+        private void OnClickImageEditAttribute(object sender, EventArgs e)
+        {
+            throw new NotImplementedException("Edit Attribute");
+        }
+
+        private void OnClickImagesSave(object sender, EventArgs e)
+        {
+            Dictionary<ImageFormat, string> extensions = new Dictionary<ImageFormat, string>()
+            {
+                {
+                    ImageFormat.Png, ".png"
+                },
+                {
+                    ImageFormat.Jpeg, ".jpg"
+                }
+            };
+
+            CommonFileDialogCheckBox correctColorCb = new CommonFileDialogCheckBox("correctColorCb",
+                Resources.DialogCorrectColor, false);
+
+            CommonOpenFileDialog fileDialog = new CommonOpenFileDialog(Resources.DialogSaveSelectedImages)
+            {
+                Controls =
+                {
+                    correctColorCb
+                },
+                IsFolderPicker = true,
+                RestoreDirectory = true
+            };
+
+            if (fileDialog.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                string directorySelected = fileDialog.FileName;
+                string filepathBase = Path.Combine(
+                    directorySelected, Path.GetFileNameWithoutExtension(currentOpenFui) + "_{0}{1}");
+                int[] selectedIndices = imageListView.SelectedIndices.Cast<int>().ToArray();
+
+                for(int i = 0; i < selectedIndices.Length; i++)
+                {
+                    int selected = selectedIndices[i];
+                    ImageFormat imageFormat = originalImageFormats[selected];
+                    FuiImageInfo imageInfo = fuiImageInfo[selected];
+                    byte[] filedata = originalImagesData[selected];
+                    string filepath;
+
+                    if (extensions.ContainsKey(imageFormat))
+                    {
+                        string extension = extensions[imageFormat];
+
+                        filepath = string.Format(filepathBase, i, extension);
+                    }
+                    else
+                    {
+                        filepath = string.Format(filepathBase, i, ".unknown");
+                    }
+
+                    if (!correctColorCb.IsChecked)
+                    {
+                        File.WriteAllBytes(filepath, filedata);
+                    }
+                    else
+                    {
+                        using(MemoryStream stream = new MemoryStream(filedata, false))
+                        {
+                            Image imageSave = Image.FromStream(stream);
+
+                            ImageUtils.ReverseColorRB((Bitmap)imageSave);
+                            imageSave.Save(filepath, imageFormat);
+
+                            imageSave.Dispose();
+                        }
+                    }
                 }
             }
         }
@@ -355,7 +434,7 @@ namespace FuiEditor.Forms
 
             fuiBytes.AddRange(fuiMainBytes);
 
-            for(int i=0; i<fuiImageInfo.Count; i++)
+            for (int i = 0; i < fuiImageInfo.Count; i++)
             {
                 FuiImageInfo imageInfo = fuiImageInfo[i];
                 using (MemoryStream imageStream = new MemoryStream(originalImagesData[i], false))

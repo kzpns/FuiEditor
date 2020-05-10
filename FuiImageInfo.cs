@@ -7,13 +7,13 @@ namespace FuiEditor
     {
         public static readonly int NativeSize = 32;
 
-        private int unk_0x0;
-        private int unk_0x4;
+        private int descriptor;
+        private int attribute;
         private int imageWidth;
         private int imageHeight;
         private int imageOffset;
         private int imageSize;
-        private int unk_0x18;
+        private int unkOffset;
         private int unk_0x1C;
 
         public FuiImageInfo()
@@ -23,13 +23,13 @@ namespace FuiEditor
 
         public void Read(byte[] filedata, int startIndex)
         {
-            unk_0x0 = FuiUtils.ToInt32(filedata, startIndex + 0);
-            unk_0x4 = FuiUtils.ToInt32(filedata, startIndex + 4);
+            descriptor = FuiUtils.ToInt32(filedata, startIndex + 0);
+            attribute = FuiUtils.ToInt32(filedata, startIndex + 4);
             imageWidth = FuiUtils.ToInt32(filedata, startIndex + 8);
             imageHeight = FuiUtils.ToInt32(filedata, startIndex + 12);
             imageOffset = FuiUtils.ToInt32(filedata, startIndex + 16);
             imageSize = FuiUtils.ToInt32(filedata, startIndex + 20);
-            unk_0x18 = FuiUtils.ToInt32(filedata, startIndex + 24);
+            unkOffset = FuiUtils.ToInt32(filedata, startIndex + 24);
             unk_0x1C = FuiUtils.ToInt32(filedata, startIndex + 28);
         }
 
@@ -37,13 +37,13 @@ namespace FuiEditor
         {
             List<byte> byteList = new List<byte>();
 
-            byteList.AddRange(FuiUtils.GetBytes(unk_0x0));
-            byteList.AddRange(FuiUtils.GetBytes(unk_0x4));
+            byteList.AddRange(FuiUtils.GetBytes(descriptor));
+            byteList.AddRange(FuiUtils.GetBytes(attribute));
             byteList.AddRange(FuiUtils.GetBytes(imageWidth));
             byteList.AddRange(FuiUtils.GetBytes(imageHeight));
             byteList.AddRange(FuiUtils.GetBytes(imageOffset));
             byteList.AddRange(FuiUtils.GetBytes(ImageSize));
-            byteList.AddRange(FuiUtils.GetBytes(unk_0x18));
+            byteList.AddRange(FuiUtils.GetBytes(unkOffset));
             byteList.AddRange(FuiUtils.GetBytes(unk_0x1C));
 
             return byteList.ToArray();
@@ -71,6 +71,18 @@ namespace FuiEditor
         {
             get => imageHeight;
             set => imageHeight = value;
+        }
+
+        public int Descriptor
+        {
+            get => descriptor;
+            set => descriptor = value;
+        }
+
+        public int Attribute
+        {
+            get => attribute;
+            set => attribute = value;
         }
     }
 }

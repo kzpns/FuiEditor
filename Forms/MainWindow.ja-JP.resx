@@ -166,19 +166,31 @@
   <data name="statusLabel.Text" xml:space="preserve">
     <value>ファイル -&gt; 開く から .fui ファイルを開きます</value>
   </data>
+  <data name="imageSaveStripMenu.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
+  <data name="imageSaveStripMenu.Text" xml:space="preserve">
+    <value>画像を保存</value>
+  </data>
   <data name="imageReplaceStripMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>158, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="imageReplaceStripMenu.Text" xml:space="preserve">
     <value>画像を置き換える</value>
   </data>
-  <data name="imageSaveStripMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>158, 22</value>
-  </data>
-  <data name="imageSaveStripMenu.Text" xml:space="preserve">
-    <value>画像を保存する</value>
+  <data name="imageEditAttributeStripMenu.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
   </data>
   <data name="imageMenuStrip.Size" type="System.Drawing.Size, System.Drawing">
-    <value>159, 48</value>
+    <value>181, 92</value>
+  </data>
+  <data name="imageBulkSave.Size" type="System.Drawing.Size, System.Drawing">
+    <value>173, 22</value>
+  </data>
+  <data name="imageBulkSave.Text" xml:space="preserve">
+    <value>選択した画像を保存</value>
+  </data>
+  <data name="imageBulkMenuStrip.Size" type="System.Drawing.Size, System.Drawing">
+    <value>174, 26</value>
   </data>
 </root>

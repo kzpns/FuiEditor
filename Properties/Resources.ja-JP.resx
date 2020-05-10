@@ -153,6 +153,9 @@
   <data name="DialogSaveImage" xml:space="preserve">
     <value>画像を保存</value>
   </data>
+  <data name="DialogSaveSelectedImages" xml:space="preserve">
+    <value>選択した画像を保存</value>
+  </data>
   <data name="DialogSelectImage" xml:space="preserve">
     <value>初めに画像を選んでください</value>
   </data>
